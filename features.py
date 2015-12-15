@@ -1,28 +1,5 @@
 # -*- coding: utf-8 -*-
 
-NG_WORDS = """
-kkk
-KKK
-未踏召喚
-前人未踏
-未踏県
-未踏の地
-semi777_mitou
-未踏座
-未踏確認不要
-前人未踏の挑戦
-未踏の穴エリア
-人跡未踏
-未踏峰
-í
-ã
-0-GRAVITY
-未踏新幹線駅
-#colopl_a
-#carrist_wish
-é
-""".split()
-
 POSITIVE = """
 未踏忘年会
 未踏説明会
@@ -198,5 +175,25 @@ cirnoize
 告白するったー
 未踏も未曾有も
 人知未踏
+í
+ã
+é
+kkk
+KKK
+未踏召喚
+前人未踏
+未踏県
+未踏の地
+semi777_mitou
+未踏座
+未踏確認不要
+前人未踏の挑戦
+未踏の穴エリア
+人跡未踏
+未踏峰
+0-GRAVITY
+未踏新幹線駅
+#colopl_a
+#carrist_wish
 """.split()
 
