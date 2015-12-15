@@ -195,5 +195,6 @@ semi777_mitou
 未踏新幹線駅
 #colopl_a
 #carrist_wish
+未踏科学技術協会
 """.split()
 
