@@ -37,7 +37,9 @@ def learn(penalty='l2'):
 
 def feature_compression():
     lr = learn(penalty='l1')
-    Z = lr.predict_proba(X)[:, 1]
     scores = list(sorted(zip(lr.coef_.ravel(), fs), reverse=True))
     for w, t in scores:
         print w, t
+
+if __name__ == '__main__':
+    feature_compression()
