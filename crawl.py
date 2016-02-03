@@ -14,6 +14,7 @@ sys.setdefaultencoding('utf-8')
 
 search_str="未踏 OR #mitou OR #mitoh"
 RAW_FILE = "raw.txt"
+WEEK_FILE = time.strftime('week_data/%Y%m%d_%H%M.txt')
 
 api = twitter.Api(base_url="https://api.twitter.com/1.1",
                   consumer_key=secret.consumer_key,
@@ -45,6 +46,7 @@ def crawl(last=None):
 
 
     fo = file(RAW_FILE, "a")
+    fo2 = file(WEEK_FILE, "a")
     while True:
         for f in found:
             if last > f.id or last == None:
@@ -55,16 +57,16 @@ def crawl(last=None):
             else:
                 retweeted_id = 0
 
-            fo.write(
-                "%s\t%s\t%s\t%s\t%s\t%s\n" %
-                (f.text.replace("\n", "<br>"),
-                 f.user.screen_name,
-                 f.id,
-                 f.retweet_count,
-                 f.favorite_count,
-                 retweeted_id,
-             )
+            data = "%s\t%s\t%s\t%s\t%s\t%s\n" % (
+                f.text.replace("\n", "<br>"),
+                f.user.screen_name,
+                f.id,
+                f.retweet_count,
+                f.favorite_count,
+                retweeted_id,
             )
+            fo.write(data)
+            fo2.write(data)
 
 
         if len(found) == 0:
@@ -72,6 +74,8 @@ def crawl(last=None):
         print last
         found = api.GetSearch(term=search_str, count=100, result_type='recent', max_id=last - 1)
 
+    fo.close()
+    fo2.close()
     print "-----------------------------------------\n"
     print_rate()
 
