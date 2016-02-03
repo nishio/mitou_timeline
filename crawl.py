@@ -50,12 +50,22 @@ def crawl(last=None):
             if last > f.id or last == None:
                 last = f.id
             print f.text
+            if f.retweeted_status:
+                retweeted_id = f.retweeted_status.id
+            else:
+                retweeted_id = 0
+
             fo.write(
-                "%s\t%s\t%s\n" %
+                "%s\t%s\t%s\t%s\t%s\t%s\n" %
                 (f.text.replace("\n", "<br>"),
                  f.user.screen_name,
-                 f.id)
+                 f.id,
+                 f.retweet_count,
+                 f.favorite_count,
+                 retweeted_id,
+             )
             )
+
 
         if len(found) == 0:
             break
