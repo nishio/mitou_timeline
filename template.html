@@ -1,7 +1,10 @@
 <html>
 <body>
-{% for url in data %}
+<h2>{{ filename }}</h2>
+{% for x in data %}
 <blockquote class="twitter-tweet" lang="ja">
-<a href="{{ url }}"></a></blockquote>
+<a href="{{ x.url }}"></a>
+</blockquote>
+score: {{ x.score }}
 {% endfor %}
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

@@ -53,16 +53,16 @@ def output_html():
         print p
         items = line.split('\t')
         url = "https://twitter.com/{1}/status/{2}".format(*items)
-        data.append(url)
-    render(data)
+        data.append(dict(url=url, score=p))
+    render(data, last_data)
 
-def render(data):
+def render(data, filename):
     from jinja2.environment import Environment
     from jinja2 import Template, FileSystemLoader
     env = Environment()
     env.loader = FileSystemLoader('.')
     t = env.get_template('template.html')
-    html = t.render(data=data)
+    html = t.render(data=data, filename=filename)
     fo = codecs.open('output.html', 'w', 'utf-8')
     fo.write(html)
     fo.close()
