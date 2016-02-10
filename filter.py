@@ -30,6 +30,7 @@ def sort_with_score():
 def get_last_data():
     import os
     ws = os.listdir('week_data')
+    ws.remove('README.md')
     ws.sort()
     return ws[-1]
 
@@ -43,8 +44,6 @@ def output_html():
     lines = fi.readlines()
     X = make_feature_matrix(lines)
     ps = lr.predict_proba(X)[:, 1]
-
-    fo = file('t.html')
 
     data = []
     for line, p in zip(lines, ps):
