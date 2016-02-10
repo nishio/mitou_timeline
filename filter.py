@@ -48,7 +48,7 @@ def output_html():
     data = []
     for line, p in zip(lines, ps):
         if line.startswith("RT "): continue
-        if p < 0.7: continue
+        if p < 0.4: continue
         print line
         print p
         items = line.split('\t')
