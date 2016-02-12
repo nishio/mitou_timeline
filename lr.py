@@ -3,7 +3,7 @@ from sklearn.linear_model import LogisticRegression
 from scipy.stats import logistic
 
 import features
-fs = features.POSITIVE + features.NEGATIVE
+fs = list(set(features.POSITIVE + features.NEGATIVE + features.OTHERS))
 M = len(fs)
 
 def make_feature_matrix(lines):
