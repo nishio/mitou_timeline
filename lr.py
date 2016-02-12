@@ -13,7 +13,7 @@ def make_feature_matrix(lines):
         X[i, :] = [f in line for f in fs]
     return X
 
-def learn(penalty='l2'):
+def make_training_data():
     pos_x = file('positive.txt').readlines()
     neg_x = file('negative.txt').readlines()#[:len(pos_x)]
     N = len(pos_x) + len(neg_x)
@@ -30,10 +30,15 @@ def learn(penalty='l2'):
         i = offset + i_
         X[i, :] = [f in line for f in fs]
         Y[i] = 0
+    return X, Y
 
+
+def learn(penalty='l2'):
+    X, Y = make_training_data()
     lr = LogisticRegression(penalty=penalty)
     lr.fit(X, Y)
     return lr
+
 
 def feature_compression():
     lr = learn(penalty='l1')
@@ -41,5 +46,25 @@ def feature_compression():
     for w, t in scores:
         print w, t
 
+def feature_compression_abs():
+    lr = learn(penalty='l1')
+    scores = list(sorted(zip(np.abs(lr.coef_.ravel()), fs), reverse=True))
+    for w, t in scores:
+        if w == 0: break
+        print t
+
+
+def cross_validation(penalty='l2'):
+    from sklearn import cross_validation
+    from sklearn.cross_validation import StratifiedKFold
+    X, Y = make_training_data()
+    cv = StratifiedKFold(Y, 10)
+    lr = LogisticRegression(penalty=penalty)
+    scores = cross_validation.cross_val_score(lr, X, Y, cv=cv)
+    print "{:.2f}+-{:.2f}".format(scores.mean(), scores.std() * 2)
+
+
 if __name__ == '__main__':
-    feature_compression()
+    #feature_compression()
+    feature_compression_abs()
+    #cross_validation()
