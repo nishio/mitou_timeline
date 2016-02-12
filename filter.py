@@ -102,11 +102,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='filter mitoh tweets')
     parser.add_argument('--output-html', action='store_true')
     parser.add_argument('--add-train-data', action='store_true')
+    parser.add_argument('--target-file')
     parser.add_argument('--threshold', type=float, default=0.5)
     args = parser.parse_args()
+
     if args.add_train_data:
         add_train_data()
 
     if args.output_html:
         output_html()
 
+    if not args.output_html and not args.add_train_data:
+        # if nothing are specified:
+        output_html()
