@@ -54,6 +54,7 @@ def output_html():
         items = line.split('\t')
         url = "https://twitter.com/{1}/status/{2}".format(*items)
         data.append(dict(url=url, score=p))
+    print len(data)
     render(data, last_data)
 
 def render(data, filename):
