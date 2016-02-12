@@ -28,17 +28,19 @@ def sort_with_score():
 
 #sort_with_score()
 
-def get_last_data():
+def get_target_file():
+    if args.target_file:
+        return args.target_file
     import os
     ws = os.listdir('week_data')
     ws.remove('README.md')
     ws.sort()
-    return ws[-1]
+    return 'week_data/' + ws[-1]
 
 def output_html():
-    last_data = get_last_data()
-    print 'processing:', last_data
-    fi = file('week_data/' + last_data)
+    target_file = get_target_file()
+    print 'processing:', target_file
+    fi = file(target_file)
     from lr import learn, make_feature_matrix
     lr = learn()
 
@@ -54,7 +56,7 @@ def output_html():
         url = "https://twitter.com/{1}/status/{2}".format(*items)
         data.append(dict(url=url, score=p))
     print len(data)
-    render(data, last_data)
+    render(data, target_file)
 
 
 def render(data, filename):
@@ -69,9 +71,9 @@ def render(data, filename):
     fo.close()
 
 def add_train_data():
-    last_data = get_last_data()
-    print 'processing:', last_data
-    fi = file('week_data/' + last_data)
+    target_file = get_target_file()
+    print 'processing:', target_file
+    fi = file(target_file)
     from lr import learn, make_feature_matrix
     lr = learn()
 
