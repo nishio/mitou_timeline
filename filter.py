@@ -1,5 +1,6 @@
 import codecs
 import features
+import argparse
 
 def find_neutral():
     fi = file('raw.txt')
@@ -48,14 +49,13 @@ def output_html():
     data = []
     for line, p in zip(lines, ps):
         if line.startswith("RT "): continue
-        if p < 0.4: continue
-        print line
-        print p
+        if p < args.threshold: continue
         items = line.split('\t')
         url = "https://twitter.com/{1}/status/{2}".format(*items)
         data.append(dict(url=url, score=p))
     print len(data)
     render(data, last_data)
+
 
 def render(data, filename):
     from jinja2.environment import Environment
@@ -68,4 +68,43 @@ def render(data, filename):
     fo.write(html)
     fo.close()
 
-output_html()
+def add_train_data():
+    last_data = get_last_data()
+    print 'processing:', last_data
+    fi = file('week_data/' + last_data)
+    from lr import learn, make_feature_matrix
+    lr = learn()
+
+    lines = fi.readlines()
+    X = make_feature_matrix(lines)
+    ps = lr.predict_proba(X)[:, 1]
+
+    data = []
+    for line, p in zip(lines, ps):
+        if line.startswith("RT "): continue
+        if p < args.threshold: continue
+        print line
+        print p
+        ret = raw_input("negative(z), neutral(x), positive(c)>")
+        if ret == 'c':
+            fo = file('positive.txt', 'a')
+            fo.write(line)
+            fo.close()
+        elif ret == 'z':
+            fo = file('negative.txt', 'a')
+            fo.write(line)
+            fo.close()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='filter mitoh tweets')
+    parser.add_argument('--output-html', action='store_true')
+    parser.add_argument('--add-train-data', action='store_true')
+    parser.add_argument('--threshold', type=float, default=0.5)
+    args = parser.parse_args()
+    if args.add_train_data:
+        add_train_data()
+
+    if args.output_html:
+        output_html()
+
