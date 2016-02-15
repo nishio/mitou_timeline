@@ -55,7 +55,7 @@ def output_html():
         if p > args.upper_limit: continue
         items = line.split('\t')
         url = "https://twitter.com/{1}/status/{2}".format(*items)
-        data.append(dict(url=url, score=p))
+        data.append(dict(url=url, score=p, text=items[0]))
     print len(data)
     render(data, target_file)
 
