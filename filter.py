@@ -52,6 +52,7 @@ def output_html():
     for line, p in zip(lines, ps):
         if line.startswith("RT "): continue
         if p < args.threshold: continue
+        if p > args.upper_limit: continue
         items = line.split('\t')
         url = "https://twitter.com/{1}/status/{2}".format(*items)
         data.append(dict(url=url, score=p))
@@ -85,6 +86,7 @@ def add_train_data():
     for line, p in zip(lines, ps):
         if line.startswith("RT "): continue
         if p < args.threshold: continue
+        if p > args.upper_limit: continue
         print line
         print p
         ret = raw_input("negative(z), neutral(x), positive(c)>")
@@ -104,6 +106,7 @@ if __name__ == "__main__":
     parser.add_argument('--add-train-data', action='store_true')
     parser.add_argument('--target-file')
     parser.add_argument('--threshold', type=float, default=0.5)
+    parser.add_argument('--upper-limit', type=float, default=1.0)
     args = parser.parse_args()
 
     if args.add_train_data:
