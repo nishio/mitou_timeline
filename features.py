@@ -265,5 +265,5 @@ IPA
 
 
 #OTHERS += [x.encode('utf-8') for x in set(file("raw.txt").read().decode('utf-8'))]
-#OTHERS += list(set(file('words.txt').read().split()))
+OTHERS += list(set(file('words.txt').read().split()))
 
