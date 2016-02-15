@@ -71,6 +71,7 @@ def render(data, filename):
     fo.write(html)
     fo.close()
 
+
 def add_train_data():
     target_file = get_target_file()
     print 'processing:', target_file
@@ -89,6 +90,9 @@ def add_train_data():
         if p > args.upper_limit: continue
         print line
         print p
+        items = line.split('\t')
+        url = "https://twitter.com/{1}/status/{2}".format(*items)
+        print url
         ret = raw_input("negative(z), neutral(x), positive(c)>")
         if ret == 'c':
             fo = file('positive.txt', 'a')
@@ -98,6 +102,7 @@ def add_train_data():
             fo = file('negative.txt', 'a')
             fo.write(line)
             fo.close()
+        print
 
 
 if __name__ == "__main__":
